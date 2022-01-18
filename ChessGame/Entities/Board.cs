@@ -1,4 +1,4 @@
-﻿namespace ChessGame.Chessboard
+﻿namespace ChessGame.Entities
 {
     class Board
     {
@@ -12,5 +12,8 @@
             QtyColumns = 8;
             Pieces = new Piece[QtyRows, QtyColumns];
         }
+
+
+
     }
 }

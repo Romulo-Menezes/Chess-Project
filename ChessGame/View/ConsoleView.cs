@@ -1,5 +1,5 @@
 ﻿using System;
-using ChessGame.Chessboard;
+using ChessGame.Entities;
 
 namespace ChessGame.View
 {
