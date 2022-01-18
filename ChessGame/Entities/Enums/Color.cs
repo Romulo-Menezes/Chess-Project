@@ -1,4 +1,4 @@
-﻿namespace ChessGame.Entities
+﻿namespace ChessGame.Entities.Enums
 {
     enum Color
     {

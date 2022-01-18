@@ -13,7 +13,11 @@
             Pieces = new Piece[QtyRows, QtyColumns];
         }
 
-
+        public void SetPiecePosition(Piece piece, Position position)
+        {
+            Pieces[position.Row, position.Column] = piece;
+            piece.Position = position;
+        }
 
     }
 }
