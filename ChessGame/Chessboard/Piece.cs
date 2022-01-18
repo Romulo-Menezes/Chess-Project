@@ -4,10 +4,10 @@
     {
         public Position Position { get; set; }
         public Color Color { get; protected set; }
-        public Chessboard Chessboard { get; set; }
+        public Board Chessboard { get; set; }
         public int QtyMoves { get; protected set; }
 
-        public Piece(Chessboard chessboard, Position position, Color color)
+        public Piece(Board chessboard, Position position, Color color)
         {
             Chessboard = chessboard;
             Position = position;
