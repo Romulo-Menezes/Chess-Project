@@ -1,5 +1,6 @@
 ﻿using System;
 using ChessGame.Chessboard;
+using ChessGame.View;
 
 namespace ChessGame
 {
@@ -7,7 +8,7 @@ namespace ChessGame
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(new Position(2, 3));
+            ConsoleView.ShowChessboard(new Board());
         }
     }
 }
