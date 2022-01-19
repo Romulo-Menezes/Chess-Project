@@ -21,7 +21,7 @@ namespace ChessGame
             try 
             {
             board.SetPiecePosition(new King(board, Color.Black), p1);
-            board.SetPiecePosition(new Bishop(board, Color.Black), p4);
+            board.SetPiecePosition(new Bishop(board, Color.White), p2);
             board.SetPiecePosition(new Knight(board, Color.Black), p3);
 
             ConsoleView.ShowChessboard(board);
