@@ -1,4 +1,6 @@
-﻿namespace ChessGame.Entities
+﻿using ChessGame.Entities.Exceptions;
+
+namespace ChessGame.Entities
 {
     class Board
     {
@@ -13,11 +15,39 @@
             Pieces = new Piece[QtyRows, QtyColumns];
         }
 
+        private bool IsEmpty(Position position)
+        {
+            ValidatePosition(position);
+            return Pieces[position.Row, position.Column] == null;
+        }
+
+        private bool IsPositionValid(Position position)
+        {
+            if (position.Row < 0 || position.Row >= QtyRows || position.Column < 0 || position.Column >= QtyColumns)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public void SetPiecePosition(Piece piece, Position position)
         {
+            if (!IsEmpty(position))
+            {
+                throw new ChessboardException("There is already a piece in that position!");
+            }
+
             Pieces[position.Row, position.Column] = piece;
             piece.Position = position;
         }
+
+        public void ValidatePosition(Position position)
+        {
+            if (!IsPositionValid(position))
+            {
+                throw new ChessboardException($"The position {position} is invalid!");
+            }
+        } 
 
     }
 }

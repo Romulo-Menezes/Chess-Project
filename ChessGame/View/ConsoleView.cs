@@ -11,8 +11,14 @@ namespace ChessGame.View
             {
                 for (int j = 0; j < board.QtyColumns; j++)
                 {
-                    Console.Write((board.Pieces[i, j] == null)?"-" : board.Pieces[i, j] 
-                                      + " ");
+                    if(board.Pieces[i, j] == null)
+                    {
+                        Console.Write("- ");
+                    }
+                    else
+                    {
+                        Console.Write(board.Pieces[i, j] + " ");
+                    }
                 }
                 Console.WriteLine();
             }

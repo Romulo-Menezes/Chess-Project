@@ -13,11 +13,11 @@
 
         public override string ToString()
         {
-            return "Position ( "
+            return "("
                 + Row
                 + ", "
                 + Column
-                + " )";
+                + ")";
         }
 
     }
