@@ -8,9 +8,13 @@ namespace ChessGame.View
     {
         public static void ShowChessboard(Board board)
         {
-            for(int i = 0; i < board.QtyRows; i++)
+            ConsoleColor temp = Console.ForegroundColor;
+            for (int i = 0; i < board.QtyRows; i++)
             {
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.Write($"{8 - i} " );
+                Console.ForegroundColor = temp;
+
                 for (int j = 0; j < board.QtyColumns; j++)
                 {
                     if(board.Pieces[i, j] == null)
@@ -24,7 +28,9 @@ namespace ChessGame.View
                 }
                 Console.WriteLine();
             }
-            Console.WriteLine("   a b c d e f g h");
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine("  a b c d e f g h");
+            Console.ForegroundColor = temp;
         }
 
         public static void ShowPiece(Piece piece)
