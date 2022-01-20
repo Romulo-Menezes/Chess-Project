@@ -29,8 +29,15 @@ namespace ChessGame.Entities
             }
             return true;
         }
+        private void ValidatePosition(Position position)
+        {
+            if (!IsPositionValid(position))
+            {
+                throw new ChessboardException($"The position {position} is invalid!");
+            }
+        }
 
-        public void SetPiecePosition(Piece piece, Position position)
+        public void AddPiece(Piece piece, Position position)
         {
             if (!IsEmpty(position))
             {
@@ -41,13 +48,17 @@ namespace ChessGame.Entities
             piece.Position = position;
         }
 
-        public void ValidatePosition(Position position)
+        public Piece RemovePiece(Position position)
         {
-            if (!IsPositionValid(position))
+            if (IsEmpty(position))
             {
-                throw new ChessboardException($"The position {position} is invalid!");
+                return null;
             }
-        } 
+
+            Piece temp = Pieces[position.Row, position.Column];
+            Pieces[position.Row, position.Column] = null;
+            return temp;
+        }
 
     }
 }
