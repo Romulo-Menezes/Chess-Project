@@ -2,6 +2,7 @@
 using ChessGame.Entities;
 using ChessGame.Entities.Enums;
 using ChessGame.Entities.Exceptions;
+using ChessGame.Controller;
 using ChessGame.View;
 
 namespace ChessGame
@@ -10,25 +11,35 @@ namespace ChessGame
     {
         static void Main(string[] args)
         {
-            Board board = new Board();
-            Position p1 = new Position(0, 0);
-            Position p2 = new Position(1, 4);
-            Position p3 = new Position(3, 6);
-            Position p4 = new Position(0, 8);
+            ChessGameController chessGame = new ChessGameController();
 
-            ConsoleView.ShowChessboard(board);
-            Console.WriteLine();
-            try 
+            while (!chessGame.Ended)
             {
-            board.SetPiecePosition(new King(board, Color.Black), p1);
-            board.SetPiecePosition(new Bishop(board, Color.White), p2);
-            board.SetPiecePosition(new Knight(board, Color.Black), p3);
+                try
+                {
+                    ConsoleView.ShowChessboard(chessGame.Board);
 
-            ConsoleView.ShowChessboard(board);
-            }
-            catch(ChessboardException e)
-            {
-                Console.WriteLine(e.Message);
+                    Console.Write("\nOrigin position: ");
+                    string origin = Console.ReadLine();
+                    Console.Write("Destination position: ");
+                    string destiny = Console.ReadLine();
+
+                    char column1 = origin[0], column2 = destiny[0];
+                    int row1 = int.Parse(origin[1] + "");
+                    int row2 = int.Parse(destiny[1] + "");
+
+                    chessGame.MovePiece(new ChessPosition(row1, column1).ToPosition(), new ChessPosition(row2, column2).ToPosition());
+                }
+                catch(ChessboardException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                
+
             }
 
         }
