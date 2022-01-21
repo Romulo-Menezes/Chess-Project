@@ -17,15 +17,24 @@ namespace ChessGame
             {
                 try
                 {
+                    Console.Clear();
                     ConsoleView.ShowChessboard(chessGame.Board);
 
                     Console.Write("\nOrigin position: ");
+
                     string origin = Console.ReadLine();
+                    char column1 = origin[0];
+                    int row1 = int.Parse(origin[1] + "");
+
+                    bool[,] availableMovements = chessGame.AvailableMovements(new ChessPosition(row1, column1).ToPosition());
+
+                    Console.Clear();
+                    ConsoleView.ShowChessboard(chessGame.Board, availableMovements);                    
+
                     Console.Write("Destination position: ");
                     string destiny = Console.ReadLine();
 
-                    char column1 = origin[0], column2 = destiny[0];
-                    int row1 = int.Parse(origin[1] + "");
+                    char column2 = destiny[0];
                     int row2 = int.Parse(destiny[1] + "");
 
                     chessGame.MovePiece(new ChessPosition(row1, column1).ToPosition(), new ChessPosition(row2, column2).ToPosition());

@@ -13,5 +13,10 @@ namespace ChessGame.Entities
             return "P";
         }
 
+        public override bool[,] AvailableMovements()
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 }

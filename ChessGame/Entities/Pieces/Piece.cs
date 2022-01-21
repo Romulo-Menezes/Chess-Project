@@ -2,7 +2,7 @@
 
 namespace ChessGame.Entities
 {
-    class Piece
+    abstract class Piece
     {
         public Position Position { get;  set; }
         public Color Color { get; protected set; }
@@ -16,5 +16,14 @@ namespace ChessGame.Entities
             Position = null;
             QtyMoves = 0;
         }
+
+        protected bool CanMove(Position position)
+        {
+            Piece temp = Board.Pieces[position.Row, position.Column];
+            return temp == null || temp.Color != Color;
+        }
+
+        public abstract bool[,] AvailableMovements();
+
     }
 }

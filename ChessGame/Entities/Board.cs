@@ -15,13 +15,13 @@ namespace ChessGame.Entities
             Pieces = new Piece[QtyRows, QtyColumns];
         }
 
-        private bool IsEmpty(Position position)
+        public bool IsEmpty(Position position)
         {
             ValidatePosition(position);
             return Pieces[position.Row, position.Column] == null;
         }
 
-        private bool IsPositionValid(Position position)
+        public bool IsPositionValid(Position position)
         {
             if (position.Row < 0 || position.Row >= QtyRows || position.Column < 0 || position.Column >= QtyColumns)
             {
@@ -29,7 +29,7 @@ namespace ChessGame.Entities
             }
             return true;
         }
-        private void ValidatePosition(Position position)
+        public void ValidatePosition(Position position)
         {
             if (!IsPositionValid(position))
             {
@@ -58,6 +58,11 @@ namespace ChessGame.Entities
             Piece temp = Pieces[position.Row, position.Column];
             Pieces[position.Row, position.Column] = null;
             return temp;
+        }
+
+        public bool[,] GetAvailableMovements(Position position)
+        {
+            return Pieces[position.Row, position.Column].AvailableMovements();
         }
 
     }

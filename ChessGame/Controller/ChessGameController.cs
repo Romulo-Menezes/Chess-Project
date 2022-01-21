@@ -54,5 +54,10 @@ namespace ChessGame.Controller
             Board.AddPiece(Board.RemovePiece(origin), destiny);
         }
 
+        public bool[,] AvailableMovements(Position position)
+        {
+            return Board.GetAvailableMovements(position);
+        }
+
     }
 }
