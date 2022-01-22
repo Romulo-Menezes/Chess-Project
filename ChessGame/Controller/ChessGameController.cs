@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using ChessGame.Entities;
 using ChessGame.Entities.Enums;
 using ChessGame.Entities.Exceptions;
@@ -12,6 +12,8 @@ namespace ChessGame.Controller
         public Color CurrentPlayer { get; private set; }
         public int GameTurn { get; private set; }
         public bool Ended { get; private set; }
+        private HashSet<Piece> _pieces;
+        private HashSet<Piece> _capturedPieces;
 
         public ChessGameController()
         {
@@ -19,35 +21,43 @@ namespace ChessGame.Controller
             CurrentPlayer = Color.White;
             GameTurn = 1;
             Ended = false;
+            _pieces = new HashSet<Piece>();
+            _capturedPieces = new HashSet<Piece>();
 
             InitBoard();
         }
 
         private void InitBoard()
         {
-            Board.AddPiece(new Rook(Board,Color.Black), new Position(0, 0));
-            Board.AddPiece(new Knight(Board, Color.Black), new Position(0, 1));
-            Board.AddPiece(new Bishop(Board, Color.Black), new Position(0, 2));
-            Board.AddPiece(new Queen(Board, Color.Black), new Position(0, 3));
-            Board.AddPiece(new King(Board, Color.Black), new Position(0, 4));
-            Board.AddPiece(new Bishop(Board, Color.Black), new Position(0, 5));
-            Board.AddPiece(new Knight(Board, Color.Black), new Position(0, 6));
-            Board.AddPiece(new Rook(Board, Color.Black), new Position(0, 7));
+            PutPieces(new Rook(Board, Color.Black), new Position(0, 0));
+            PutPieces(new Knight(Board, Color.Black), new Position(0, 1));
+            PutPieces(new Bishop(Board, Color.Black), new Position(0, 2));
+            PutPieces(new Queen(Board, Color.Black), new Position(0, 3));
+            PutPieces(new King(Board, Color.Black), new Position(0, 4));
+            PutPieces(new Bishop(Board, Color.Black), new Position(0, 5));
+            PutPieces(new Knight(Board, Color.Black), new Position(0, 6));
+            PutPieces(new Rook(Board, Color.Black), new Position(0, 7));
 
-            Board.AddPiece(new Rook(Board, Color.White), new Position(7, 0));
-            Board.AddPiece(new Knight(Board, Color.White), new Position(7, 1));
-            Board.AddPiece(new Bishop(Board, Color.White), new Position(7, 2));
-            Board.AddPiece(new Queen(Board, Color.White), new Position(7, 3));
-            Board.AddPiece(new King(Board, Color.White), new Position(7, 4));
-            Board.AddPiece(new Bishop(Board, Color.White), new Position(7, 5));
-            Board.AddPiece(new Knight(Board, Color.White), new Position(7, 6));
-            Board.AddPiece(new Rook(Board, Color.White), new Position(7, 7));
+            PutPieces(new Rook(Board, Color.White), new Position(7, 0));
+            PutPieces(new Knight(Board, Color.White), new Position(7, 1));
+            PutPieces(new Bishop(Board, Color.White), new Position(7, 2));
+            PutPieces(new Queen(Board, Color.White), new Position(7, 3));
+            PutPieces(new King(Board, Color.White), new Position(7, 4));
+            PutPieces(new Bishop(Board, Color.White), new Position(7, 5));
+            PutPieces(new Knight(Board, Color.White), new Position(7, 6));
+            PutPieces(new Rook(Board, Color.White), new Position(7, 7));
 
             for(int i = 0; i < 8; i++)
             {
-                Board.AddPiece(new Pawn(Board, Color.Black), new Position(1, i));
-                Board.AddPiece(new Pawn(Board, Color.White), new Position(6, i));
+                //PutPieces(new Pawn(Board, Color.Black), new Position(1, i));
+                //PutPieces(new Pawn(Board, Color.White), new Position(6, i));
             }
+        }
+
+        private void PutPieces(Piece piece, Position position)
+        {
+            Board.AddPiece(piece, position);
+            _pieces.Add(piece);
         }
 
         private void ChangePlayer()
@@ -68,6 +78,40 @@ namespace ChessGame.Controller
             piece.ImcrementQtyMoves();
             Piece capturedPiece = Board.RemovePiece(destiny);
             Board.AddPiece(piece, destiny);
+
+            if(capturedPiece != null)
+            {
+                _capturedPieces.Add(capturedPiece);
+            }
+
+        }
+
+        public HashSet<Piece> CapturedPieces(Color color)
+        {
+            HashSet<Piece> temp = new HashSet<Piece>();
+            foreach(Piece piece in _capturedPieces)
+            {
+                if(piece.Color == color)
+                {
+                    temp.Add(piece);
+                }
+            }
+            return temp;
+        }
+
+        public HashSet<Piece> PiecesInGame(Color color)
+        {
+            HashSet<Piece> temp = new HashSet<Piece>();
+            foreach (Piece piece in _pieces)
+            {
+                if (piece.Color == color)
+                {
+                    temp.Add(piece);
+                }
+            }
+
+            temp.ExceptWith(CapturedPieces(color));
+            return temp;
         }
 
         public void MakeMovement(Position origin, Position destiny)
