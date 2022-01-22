@@ -23,6 +23,34 @@ namespace ChessGame.Entities
             return temp == null || temp.Color != Color;
         }
 
+        public void ImcrementQtyMoves()
+        {
+            QtyMoves++;
+        }
+
+        public bool ExistsAvailableMovements()
+        {
+            bool[,] movements = AvailableMovements();
+
+            for(int i = 0; i < 8; i++)
+            {
+                for(int j = 0; j < 8; j++)
+                {
+                    if (movements[i, j])
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public bool CanMoveTo(Position position)
+        {
+            return AvailableMovements()[position.Row, position.Column];
+        }
+
         public abstract bool[,] AvailableMovements();
 
     }

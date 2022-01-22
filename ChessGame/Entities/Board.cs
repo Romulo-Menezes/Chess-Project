@@ -1,4 +1,5 @@
-﻿using ChessGame.Entities.Exceptions;
+﻿using ChessGame.Entities.Enums;
+using ChessGame.Entities.Exceptions;
 
 namespace ChessGame.Entities
 {
@@ -63,6 +64,25 @@ namespace ChessGame.Entities
         public bool[,] GetAvailableMovements(Position position)
         {
             return Pieces[position.Row, position.Column].AvailableMovements();
+        }
+
+        public bool ExistsAvailableMovements(Position position)
+        {
+            return Pieces[position.Row, position.Column].ExistsAvailableMovements();
+        }
+
+        public Color GetPieceColor(Position position)
+        {
+            if (IsEmpty(position))
+            {
+                throw new ChessboardException("There is no chess piece in this position!");
+            }
+            return Pieces[position.Row, position.Column].Color;
+        }
+
+        public bool CanMoveTo(Position origin, Position destiny)
+        {
+            return Pieces[origin.Row, origin.Column].CanMoveTo(destiny);
         }
 
     }

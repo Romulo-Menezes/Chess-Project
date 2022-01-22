@@ -1,6 +1,7 @@
 ﻿using System;
 using ChessGame.Entities;
 using ChessGame.Entities.Enums;
+using ChessGame.Entities.Exceptions;
 using ChessGame.View;
 
 namespace ChessGame.Controller
@@ -49,9 +50,31 @@ namespace ChessGame.Controller
             }
         }
 
-        public void MovePiece(Position origin, Position destiny)
+        private void ChangePlayer()
         {
-            Board.AddPiece(Board.RemovePiece(origin), destiny);
+            if (CurrentPlayer == Color.White)
+            {
+                CurrentPlayer = Color.Black;
+            }
+            else
+            {
+                CurrentPlayer = Color.White;
+            }
+        }
+
+        private void MovePiece(Position origin, Position destiny)
+        {
+            Piece piece = Board.RemovePiece(origin);
+            piece.ImcrementQtyMoves();
+            Piece capturedPiece = Board.RemovePiece(destiny);
+            Board.AddPiece(piece, destiny);
+        }
+
+        public void MakeMovement(Position origin, Position destiny)
+        {
+            MovePiece(origin, destiny);
+            GameTurn++;
+            ChangePlayer();
         }
 
         public bool[,] AvailableMovements(Position position)
@@ -59,5 +82,24 @@ namespace ChessGame.Controller
             return Board.GetAvailableMovements(position);
         }
 
+        public void ValidatePositionOrigin(Position position)
+        {
+            if(CurrentPlayer != Board.GetPieceColor(position))
+            {
+                throw new ChessboardException("The chosen piece is not yours!");
+            }
+            if (!Board.ExistsAvailableMovements(position))
+            {
+                throw new ChessboardException("There are no possible moves for this chess piece!");
+            }
+        }
+
+        public void ValidatePositionDestiny(Position origin, Position destiny)
+        {
+            if (!Board.CanMoveTo(origin, destiny))
+            {
+                throw new ChessboardException("Invalid position!");
+            }
+        }
     }
 }
