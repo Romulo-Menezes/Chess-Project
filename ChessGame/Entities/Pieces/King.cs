@@ -19,49 +19,49 @@ namespace ChessGame.Entities
             Position pos = new Position(0, 0);
 
             // North
-            pos.SetPosition(Position.Row - 1, Position.Column);
+            pos.SetPosition(GetRow() - 1, GetColumn());
             if (Board.IsPositionValid(pos) && CanMove(pos))
             {
                 movements[pos.Row, pos.Column] = true;
             }
             // NE
-            pos.SetPosition(Position.Row - 1, Position.Column + 1);
+            pos.SetPosition(GetRow(), GetColumn() + 1);
             if (Board.IsPositionValid(pos) && CanMove(pos))
             {
                 movements[pos.Row, pos.Column] = true;
             }
             // East
-            pos.SetPosition(Position.Row, Position.Column + 1);
+            pos.SetPosition(GetRow(), GetColumn() + 1);
             if (Board.IsPositionValid(pos) && CanMove(pos))
             {
                 movements[pos.Row, pos.Column] = true;
             }
             // SE
-            pos.SetPosition(Position.Row + 1, Position.Column + 1);
+            pos.SetPosition(GetRow() + 1, GetColumn() + 1);
             if (Board.IsPositionValid(pos) && CanMove(pos))
             {
                 movements[pos.Row, pos.Column] = true;
             }
             // South
-            pos.SetPosition(Position.Row + 1, Position.Column);
+            pos.SetPosition(GetRow() + 1, GetColumn());
             if (Board.IsPositionValid(pos) && CanMove(pos))
             {
                 movements[pos.Row, pos.Column] = true;
             }
             // SW
-            pos.SetPosition(Position.Row + 1, Position.Column - 1);
+            pos.SetPosition(GetRow() + 1, GetColumn() - 1);
             if (Board.IsPositionValid(pos) && CanMove(pos))
             {
                 movements[pos.Row, pos.Column] = true;
             }
             // West
-            pos.SetPosition(Position.Row, Position.Column - 1);
+            pos.SetPosition(GetRow(), GetColumn() - 1);
             if (Board.IsPositionValid(pos) && CanMove(pos))
             {
                 movements[pos.Row, pos.Column] = true;
             }
             // NW
-            pos.SetPosition(Position.Row - 1, Position.Column - 1);
+            pos.SetPosition(GetRow() - 1, GetColumn() - 1);
             if (Board.IsPositionValid(pos) && CanMove(pos))
             {
                 movements[pos.Row, pos.Column] = true;

@@ -19,7 +19,7 @@ namespace ChessGame.Entities
             Position pos = new Position(0, 0);
 
             // North
-            pos.SetPosition(Position.Row - 1, Position.Column);
+            pos.SetPosition(GetRow() - 1, GetColumn());
             while (Board.IsPositionValid(pos) && CanMove(pos))
             {
                 movements[pos.Row, pos.Column] = true;
@@ -30,7 +30,7 @@ namespace ChessGame.Entities
                 pos.Row -= 1;
             }
             // NE
-            pos.SetPosition(Position.Row - 1, Position.Column + 1);
+            pos.SetPosition(GetRow() - 1, GetColumn() + 1);
             while (Board.IsPositionValid(pos) && CanMove(pos))
             {
                 movements[pos.Row, pos.Column] = true;
@@ -42,7 +42,7 @@ namespace ChessGame.Entities
                 pos.Column += 1;
             }
             // East
-            pos.SetPosition(Position.Row, Position.Column + 1);
+            pos.SetPosition(GetRow(), GetColumn() + 1);
             while (Board.IsPositionValid(pos) && CanMove(pos))
             {
                 movements[pos.Row, pos.Column] = true;
@@ -53,7 +53,7 @@ namespace ChessGame.Entities
                 pos.Column += 1;
             }
             // SE
-            pos.SetPosition(Position.Row + 1, Position.Column + 1);
+            pos.SetPosition(GetRow() + 1, GetColumn() + 1);
             while (Board.IsPositionValid(pos) && CanMove(pos))
             {
                 movements[pos.Row, pos.Column] = true;
@@ -65,7 +65,7 @@ namespace ChessGame.Entities
                 pos.Column += 1;
             }
             // South
-            pos.SetPosition(Position.Row + 1, Position.Column);
+            pos.SetPosition(GetRow() + 1, GetColumn());
             while (Board.IsPositionValid(pos) && CanMove(pos))
             {
                 movements[pos.Row, pos.Column] = true;
@@ -76,7 +76,7 @@ namespace ChessGame.Entities
                 pos.Row += 1;
             }
             // SW
-            pos.SetPosition(Position.Row + 1, Position.Column - 1);
+            pos.SetPosition(GetRow() + 1, GetColumn() - 1);
             while (Board.IsPositionValid(pos) && CanMove(pos))
             {
                 movements[pos.Row, pos.Column] = true;
@@ -88,7 +88,7 @@ namespace ChessGame.Entities
                 pos.Column -= 1;
             }
             // West
-            pos.SetPosition(Position.Row, Position.Column - 1);
+            pos.SetPosition(GetRow(), GetColumn() - 1);
             while (Board.IsPositionValid(pos) && CanMove(pos))
             {
                 movements[pos.Row, pos.Column] = true;
@@ -99,7 +99,7 @@ namespace ChessGame.Entities
                 pos.Column -= 1;
             }
             // NW
-            pos.SetPosition(Position.Row - 1, Position.Column - 1);
+            pos.SetPosition(GetRow() - 1, GetColumn() - 1);
             while (Board.IsPositionValid(pos) && CanMove(pos))
             {
                 movements[pos.Row, pos.Column] = true;
