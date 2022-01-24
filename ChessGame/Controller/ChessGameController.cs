@@ -31,28 +31,28 @@ namespace ChessGame.Controller
 
         private void InitBoard()
         {
-            PutPieces(new Rook(Board, Color.Black), new Position(0, 1));
-            //PutPieces(new Knight(Board, Color.Black), new Position(0, 1));
-            //PutPieces(new Bishop(Board, Color.Black), new Position(0, 2));
-            //PutPieces(new Queen(Board, Color.Black), new Position(0, 3));
-            PutPieces(new King(Board, Color.Black), new Position(0, 0));
-            //PutPieces(new Bishop(Board, Color.Black), new Position(0, 5));
-            //PutPieces(new Knight(Board, Color.Black), new Position(0, 6));
-            //PutPieces(new Rook(Board, Color.Black), new Position(0, 7));
+            PutPieces(new Rook(Board, Color.Black), new Position(0, 0));
+            PutPieces(new Knight(Board, Color.Black), new Position(0, 1));
+            PutPieces(new Bishop(Board, Color.Black), new Position(0, 2));
+            PutPieces(new Queen(Board, Color.Black), new Position(0, 3));
+            PutPieces(new King(Board, Color.Black), new Position(0, 4));
+            PutPieces(new Bishop(Board, Color.Black), new Position(0, 5));
+            PutPieces(new Knight(Board, Color.Black), new Position(0, 6));
+            PutPieces(new Rook(Board, Color.Black), new Position(0, 7));
 
-            PutPieces(new Rook(Board, Color.White), new Position(7, 2));
-            //PutPieces(new Knight(Board, Color.White), new Position(7, 1));
-            //PutPieces(new Bishop(Board, Color.White), new Position(7, 2));
-            //PutPieces(new Queen(Board, Color.White), new Position(7, 3));
+            PutPieces(new Rook(Board, Color.White), new Position(7, 0));
+            PutPieces(new Knight(Board, Color.White), new Position(7, 1));
+            PutPieces(new Bishop(Board, Color.White), new Position(7, 2));
+            PutPieces(new Queen(Board, Color.White), new Position(7, 3));
             PutPieces(new King(Board, Color.White), new Position(7, 4));
-            //PutPieces(new Bishop(Board, Color.White), new Position(7, 5));
-            //PutPieces(new Knight(Board, Color.White), new Position(7, 6));
-            PutPieces(new Rook(Board, Color.White), new Position(1, 7));
+            PutPieces(new Bishop(Board, Color.White), new Position(7, 5));
+            PutPieces(new Knight(Board, Color.White), new Position(7, 6));
+            PutPieces(new Rook(Board, Color.White), new Position(7, 7));
 
             for (int i = 0; i < 8; i++)
             {
-                //PutPieces(new Pawn(Board, Color.Black), new Position(1, i));
-                //PutPieces(new Pawn(Board, Color.White), new Position(6, i));
+                PutPieces(new Pawn(Board, Color.Black), new Position(1, i));
+                PutPieces(new Pawn(Board, Color.White), new Position(6, i));
             }
         }
 

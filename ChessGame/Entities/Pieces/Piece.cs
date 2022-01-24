@@ -17,7 +17,7 @@ namespace ChessGame.Entities
             QtyMoves = 0;
         }
 
-        protected bool CanMove(Position position)
+        protected virtual bool CanMove(Position position)
         {
             Piece temp = Board.Pieces[position.Row, position.Column];
             return temp == null || temp.Color != Color;
