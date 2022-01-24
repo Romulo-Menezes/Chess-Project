@@ -145,8 +145,11 @@ namespace ChessGame.View
             Console.WriteLine("Captured pieces:");
             Console.Write("White: ");
             ShowCollection(chessGame.CapturedPieces(Color.White));
+            ConsoleColor foreground = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.Write("Black: ");
             ShowCollection(chessGame.CapturedPieces(Color.Black));
+            Console.ForegroundColor = foreground;
             Console.WriteLine();
         }
 
