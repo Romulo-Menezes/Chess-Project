@@ -31,23 +31,23 @@ namespace ChessGame.Controller
 
         private void InitBoard()
         {
-            PutPieces(new Rook(Board, Color.Black), new Position(0, 0));
-            PutPieces(new Knight(Board, Color.Black), new Position(0, 1));
-            PutPieces(new Bishop(Board, Color.Black), new Position(0, 2));
-            PutPieces(new Queen(Board, Color.Black), new Position(0, 3));
-            PutPieces(new King(Board, Color.Black), new Position(0, 4));
-            PutPieces(new Bishop(Board, Color.Black), new Position(0, 5));
-            PutPieces(new Knight(Board, Color.Black), new Position(0, 6));
-            PutPieces(new Rook(Board, Color.Black), new Position(0, 7));
+            PutPieces(new Rook(Board, Color.Black), new Position(0, 1));
+            //PutPieces(new Knight(Board, Color.Black), new Position(0, 1));
+            //PutPieces(new Bishop(Board, Color.Black), new Position(0, 2));
+            //PutPieces(new Queen(Board, Color.Black), new Position(0, 3));
+            PutPieces(new King(Board, Color.Black), new Position(0, 0));
+            //PutPieces(new Bishop(Board, Color.Black), new Position(0, 5));
+            //PutPieces(new Knight(Board, Color.Black), new Position(0, 6));
+            //PutPieces(new Rook(Board, Color.Black), new Position(0, 7));
 
-            PutPieces(new Rook(Board, Color.White), new Position(7, 0));
-            PutPieces(new Knight(Board, Color.White), new Position(7, 1));
-            PutPieces(new Bishop(Board, Color.White), new Position(7, 2));
-            PutPieces(new Queen(Board, Color.White), new Position(7, 3));
+            PutPieces(new Rook(Board, Color.White), new Position(7, 2));
+            //PutPieces(new Knight(Board, Color.White), new Position(7, 1));
+            //PutPieces(new Bishop(Board, Color.White), new Position(7, 2));
+            //PutPieces(new Queen(Board, Color.White), new Position(7, 3));
             PutPieces(new King(Board, Color.White), new Position(7, 4));
-            PutPieces(new Bishop(Board, Color.White), new Position(7, 5));
-            PutPieces(new Knight(Board, Color.White), new Position(7, 6));
-            PutPieces(new Rook(Board, Color.White), new Position(7, 7));
+            //PutPieces(new Bishop(Board, Color.White), new Position(7, 5));
+            //PutPieces(new Knight(Board, Color.White), new Position(7, 6));
+            PutPieces(new Rook(Board, Color.White), new Position(1, 7));
 
             for (int i = 0; i < 8; i++)
             {
@@ -125,7 +125,7 @@ namespace ChessGame.Controller
             throw new ChessboardException($"There is no {color} King on the board!");
         }
 
-        public bool IsThereCheck(Color color)
+        private bool IsThereCheck(Color color)
         {
             Piece king = GetKing(color);
 
@@ -139,6 +139,38 @@ namespace ChessGame.Controller
                 }
             }
             return false;
+        }
+
+        private bool IsInCheckmate(Color color)
+        {
+            if (!IsThereCheck(color))
+            {
+                return false;
+            }
+
+            foreach (Piece piece in PiecesInGame(color))
+            {
+                bool[,] temp = piece.AvailableMovements();
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        if (temp[i, j])
+                        {
+                            Position origin = piece.Position;
+                            Position destiny = new Position(i, j);
+                            Piece capturedPiece = MovePiece(origin, destiny);
+                            bool check = IsThereCheck(color);
+                            UndoMove(origin, destiny, capturedPiece);
+                            if (!check)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
         }
 
         public HashSet<Piece> CapturedPieces(Color color)
@@ -188,8 +220,15 @@ namespace ChessGame.Controller
                 Check = false;
             }
 
-            GameTurn++;
-            ChangePlayer();
+            if (IsInCheckmate(Adversary(CurrentPlayer)))
+            {
+                Ended = true;
+            }
+            else
+            {
+                GameTurn++;
+                ChangePlayer();
+            }
         }
 
         public bool[,] AvailableMovements(Position position)

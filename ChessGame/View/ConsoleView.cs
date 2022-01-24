@@ -27,6 +27,16 @@ namespace ChessGame.View
             chessGame.ValidatePositionDestiny(posOrigin, posDestiny);
 
             chessGame.MakeMovement(posOrigin, posDestiny);
+
+            if (chessGame.Ended)
+            {
+                Console.Clear();
+                ShowChessboard(chessGame.Board);
+                Console.WriteLine("CHECKMATE!\n");
+                Console.WriteLine($"Winner: {chessGame.CurrentPlayer}");
+                Console.WriteLine($"Game turn: {chessGame.GameTurn}");
+            }
+
         }
         public static void ShowChessboard(Board board)
         {
@@ -128,7 +138,6 @@ namespace ChessGame.View
             {
                 Console.WriteLine("CHECK!");
             }
-
         }
 
         public static void ShowCapturedPieces(ChessGameController chessGame)
