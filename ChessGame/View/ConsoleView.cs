@@ -108,6 +108,11 @@ namespace ChessGame.View
             ShowChessboard(chessGame.Board);
             ShowCapturedPieces(chessGame);
 
+            if (chessGame.Check)
+            {
+                Console.WriteLine("CHECK!");
+            }
+
         }
 
         public static void ShowInformation(ChessGameController chessGame, bool[,] availableMovements)
@@ -118,6 +123,11 @@ namespace ChessGame.View
 
             ShowChessboard(chessGame.Board, availableMovements);
             ShowCapturedPieces(chessGame);
+
+            if (chessGame.Check)
+            {
+                Console.WriteLine("CHECK!");
+            }
 
         }
 
@@ -135,7 +145,7 @@ namespace ChessGame.View
         {
             Console.Write("[ ");
 
-            foreach(Piece p in pieces)
+            foreach (Piece p in pieces)
             {
                 Console.Write($"{p} ");
             }

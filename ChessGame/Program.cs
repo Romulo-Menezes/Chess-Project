@@ -19,16 +19,17 @@ namespace ChessGame
                 {
                     ConsoleView.ShowGame(chessGame);
                 }
-                catch(ChessboardException e)
+                catch (ChessboardException e)
                 {
                     Console.WriteLine(e.Message);
                     Console.ReadLine();
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
+                    Console.WriteLine();
                 }
-                
+
 
             }
 
