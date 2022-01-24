@@ -20,7 +20,7 @@ namespace ChessGame.Entities
 
             // North
             pos.SetPosition(Position.Row - 1, Position.Column);
-            if(Board.IsPositionValid(pos) && CanMove(pos))
+            if (Board.IsPositionValid(pos) && CanMove(pos))
             {
                 movements[pos.Row, pos.Column] = true;
             }

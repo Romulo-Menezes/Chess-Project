@@ -63,7 +63,7 @@ namespace ChessGame.Entities
                 {
                     break;
                 }
-                pos.Row -= 1; 
+                pos.Row -= 1;
                 pos.Column -= 1;
             }
 
