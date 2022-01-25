@@ -35,7 +35,7 @@ namespace ChessGame.Controller
             PutPieces(new Knight(Board, Color.Black), new Position(0, 1));
             PutPieces(new Bishop(Board, Color.Black), new Position(0, 2));
             PutPieces(new Queen(Board, Color.Black), new Position(0, 3));
-            PutPieces(new King(Board, Color.Black), new Position(0, 4));
+            PutPieces(new King(Board, Color.Black, this), new Position(0, 4));
             PutPieces(new Bishop(Board, Color.Black), new Position(0, 5));
             PutPieces(new Knight(Board, Color.Black), new Position(0, 6));
             PutPieces(new Rook(Board, Color.Black), new Position(0, 7));
@@ -44,7 +44,7 @@ namespace ChessGame.Controller
             PutPieces(new Knight(Board, Color.White), new Position(7, 1));
             PutPieces(new Bishop(Board, Color.White), new Position(7, 2));
             PutPieces(new Queen(Board, Color.White), new Position(7, 3));
-            PutPieces(new King(Board, Color.White), new Position(7, 4));
+            PutPieces(new King(Board, Color.White, this), new Position(7, 4));
             PutPieces(new Bishop(Board, Color.White), new Position(7, 5));
             PutPieces(new Knight(Board, Color.White), new Position(7, 6));
             PutPieces(new Rook(Board, Color.White), new Position(7, 7));
@@ -86,6 +86,27 @@ namespace ChessGame.Controller
                 _capturedPieces.Add(capturedPiece);
             }
 
+            // Special move: Castle
+
+            if (piece is King && destiny.Column == origin.Column + 2)
+            {
+                Position rookO = new Position(origin.Row, origin.Column + 3);
+                Position rookD = new Position(origin.Row, origin.Column + 1);
+                Piece temp = Board.RemovePiece(rookO);
+                temp.ImcrementQtyMoves();
+                Board.AddPiece(temp, rookD);
+            }
+
+            if (piece is King && destiny.Column == origin.Column - 2)
+            {
+                Position rookO = new Position(origin.Row, origin.Column - 4);
+                Position rookD = new Position(origin.Row, origin.Column - 1);
+                Piece temp = Board.RemovePiece(rookO);
+                temp.ImcrementQtyMoves();
+                Board.AddPiece(temp, rookD);
+            }
+
+
             return capturedPiece;
         }
 
@@ -99,6 +120,27 @@ namespace ChessGame.Controller
                 Board.AddPiece(capturedPiece, destiny);
             }
             Board.AddPiece(piece, origin);
+
+            // Special move: Castle
+
+            if (piece is King && destiny.Column == origin.Column + 2)
+            {
+                Position rookO = new Position(origin.Row, origin.Column + 3);
+                Position rookD = new Position(origin.Row, origin.Column + 1);
+                Piece temp = Board.RemovePiece(rookD);
+                temp.DecrementQtyMoves();
+                Board.AddPiece(temp, rookO);
+            }
+
+            if (piece is King && destiny.Column == origin.Column - 2)
+            {
+                Position rookO = new Position(origin.Row, origin.Column - 4);
+                Position rookD = new Position(origin.Row, origin.Column - 1);
+                Piece temp = Board.RemovePiece(rookD);
+                temp.DecrementQtyMoves();
+                Board.AddPiece(temp, rookO);
+            }
+
         }
 
         private Color Adversary(Color color)
