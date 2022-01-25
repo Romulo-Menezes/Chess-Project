@@ -23,7 +23,7 @@ namespace ChessGame.Entities
             while (Board.IsPositionValid(pos) && CanMove(pos))
             {
                 movements[pos.Row, pos.Column] = true;
-                if (!Board.IsEmpty(pos) && Board.Pieces[pos.Row, pos.Column].Color != Color)
+                if (!Board.IsEmpty(pos) && Board.GetPieceColor(pos) != Color)
                 {
                     break;
                 }
@@ -35,7 +35,7 @@ namespace ChessGame.Entities
             while (Board.IsPositionValid(pos) && CanMove(pos))
             {
                 movements[pos.Row, pos.Column] = true;
-                if (!Board.IsEmpty(pos) && Board.Pieces[pos.Row, pos.Column].Color != Color)
+                if (!Board.IsEmpty(pos) && Board.GetPieceColor(pos) != Color)
                 {
                     break;
                 }
@@ -47,7 +47,7 @@ namespace ChessGame.Entities
             while (Board.IsPositionValid(pos) && CanMove(pos))
             {
                 movements[pos.Row, pos.Column] = true;
-                if (!Board.IsEmpty(pos) && Board.Pieces[pos.Row, pos.Column].Color != Color)
+                if (!Board.IsEmpty(pos) && Board.GetPieceColor(pos) != Color)
                 {
                     break;
                 }
@@ -59,7 +59,7 @@ namespace ChessGame.Entities
             while (Board.IsPositionValid(pos) && CanMove(pos))
             {
                 movements[pos.Row, pos.Column] = true;
-                if (!Board.IsEmpty(pos) && Board.Pieces[pos.Row, pos.Column].Color != Color)
+                if (!Board.IsEmpty(pos) && Board.GetPieceColor(pos) != Color)
                 {
                     break;
                 }

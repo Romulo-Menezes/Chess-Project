@@ -16,6 +16,11 @@ namespace ChessGame.Entities
             Pieces = new Piece[QtyRows, QtyColumns];
         }
 
+        public Piece GetPiece(Position position)
+        {
+            return Pieces[position.Row, position.Column];
+        }
+
         public bool IsEmpty(Position position)
         {
             ValidatePosition(position);

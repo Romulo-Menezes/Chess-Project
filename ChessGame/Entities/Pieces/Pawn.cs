@@ -69,13 +69,13 @@ namespace ChessGame.Entities
 
         private bool IsThereAdversary(Position position)
         {
-            Piece piece = Board.Pieces[position.Row, position.Column];
+            Piece piece = Board.GetPiece(position);
             return piece != null && piece.Color != Color;
         }
 
         protected override bool CanMove(Position position)
         {
-            return Board.Pieces[position.Row, position.Column] == null; ;
+            return Board.GetPiece(position) == null; ;
         }
 
 
