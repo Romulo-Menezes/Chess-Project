@@ -12,6 +12,12 @@ namespace ChessGame.Entities
             _chessGame = chessGame;
         }
 
+        private bool CastleTest(Position position)
+        {
+            Piece piece = Board.Pieces[position.Row, position.Column];
+            return piece != null && piece is Rook && piece.Color == Color && piece.QtyMoves == 0;
+        }
+
         public override string ToString()
         {
             return "K";
