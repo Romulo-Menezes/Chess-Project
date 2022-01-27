@@ -273,6 +273,31 @@ namespace ChessGame.Controller
                 throw new ChessboardException("You can't put yourself in check!");
             }
 
+            Piece piece = Board.GetPiece(destiny);
+
+            // Special move: Promotion
+            if (piece is Pawn)
+            {
+                if((piece.Color == Color.White && piece.GetRow() == 0) || (piece.Color == Color.Black && piece.GetRow() == 7))
+                {
+                    piece = Board.RemovePiece(destiny);
+                    _pieces.Remove(piece);
+                    Color temp = piece.Color;
+                    piece = new Queen(Board, temp);
+                    Board.AddPiece(piece, destiny);
+                }
+            }
+
+            // Special move: En Passant
+            if (piece is Pawn && (destiny.Row == origin.Row + 2 || destiny.Row == origin.Row - 2))
+            {
+                VulnerableEnPassant = piece;
+            }
+            else
+            {
+                VulnerableEnPassant = null;
+            }
+
             if (IsThereCheck(Adversary(CurrentPlayer)))
             {
                 Check = true;
@@ -290,17 +315,6 @@ namespace ChessGame.Controller
             {
                 GameTurn++;
                 ChangePlayer();
-            }
-
-            // Special move: En Passant
-            Piece piece = Board.GetPiece(destiny);
-            if (piece is Pawn &&(destiny.Row == origin.Row + 2 || destiny.Row == origin.Row - 2))
-            {
-                VulnerableEnPassant = piece;
-            }
-            else
-            {
-                VulnerableEnPassant = null;
             }
 
         }
