@@ -1,11 +1,15 @@
 ﻿using ChessGame.Entities.Enums;
+using ChessGame.Controller;
 
 namespace ChessGame.Entities
 {
     class Pawn : Piece
     {
-        public Pawn(Board board, Color color) : base(board, color)
+        private ChessGameController _chessGame;
+
+        public Pawn(Board board, Color color, ChessGameController chessGame) : base(board, color)
         {
+            _chessGame = chessGame;
         }
 
         public override string ToString()
@@ -40,6 +44,22 @@ namespace ChessGame.Entities
                 {
                     movements[pos.Row, pos.Column] = true;
                 }
+                // Special move: En Passant
+                if(GetRow() == 3)
+                {
+                    // Left
+                    pos.SetPosition(GetRow(), GetColumn() - 1); 
+                    if (Board.IsPositionValid(pos) && IsThereAdversary(pos) && (Board.GetPiece(pos) == _chessGame.VulnerableEnPassant))
+                    {
+                        movements[pos.Row - 1, pos.Column] = true;
+                    }
+                    // Right
+                    pos.SetPosition(GetRow(), GetColumn() + 1);
+                    if (Board.IsPositionValid(pos) && IsThereAdversary(pos) && (Board.GetPiece(pos) == _chessGame.VulnerableEnPassant))
+                    {
+                        movements[pos.Row - 1, pos.Column] = true;
+                    }
+                }
             }
             else
             {
@@ -62,6 +82,22 @@ namespace ChessGame.Entities
                 if (Board.IsPositionValid(pos) && IsThereAdversary(pos))
                 {
                     movements[pos.Row, pos.Column] = true;
+                }
+                // Special move: En Passant
+                if (GetRow() == 4)
+                {
+                    // Left
+                    pos.SetPosition(GetRow(), GetColumn() - 1);
+                    if (Board.IsPositionValid(pos) && IsThereAdversary(pos) && (Board.GetPiece(pos) == _chessGame.VulnerableEnPassant))
+                    {
+                        movements[pos.Row + 1, pos.Column] = true;
+                    }
+                    // Right
+                    pos.SetPosition(GetRow(), GetColumn() + 1);
+                    if (Board.IsPositionValid(pos) && IsThereAdversary(pos) && (Board.GetPiece(pos) == _chessGame.VulnerableEnPassant))
+                    {
+                        movements[pos.Row + 1, pos.Column] = true;
+                    }
                 }
             }
             return movements;

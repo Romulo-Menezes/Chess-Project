@@ -15,6 +15,7 @@ namespace ChessGame.Controller
         public bool Check { get; private set; }
         private HashSet<Piece> _pieces;
         private HashSet<Piece> _capturedPieces;
+        public Piece VulnerableEnPassant { get; private set; }
 
         public ChessGameController()
         {
@@ -25,6 +26,7 @@ namespace ChessGame.Controller
             Check = false;
             _pieces = new HashSet<Piece>();
             _capturedPieces = new HashSet<Piece>();
+            VulnerableEnPassant = null;
 
             InitBoard();
         }
@@ -51,8 +53,8 @@ namespace ChessGame.Controller
 
             for (int i = 0; i < 8; i++)
             {
-                PutPieces(new Pawn(Board, Color.Black), new Position(1, i));
-                PutPieces(new Pawn(Board, Color.White), new Position(6, i));
+                PutPieces(new Pawn(Board, Color.Black, this), new Position(1, i));
+                PutPieces(new Pawn(Board, Color.White, this), new Position(6, i));
             }
         }
 
@@ -105,6 +107,17 @@ namespace ChessGame.Controller
                 Board.AddPiece(temp, rookD);
             }
 
+            // Special move: En Passant
+            if (piece is Pawn)
+            {
+                if(origin.Column != destiny.Column && capturedPiece == null)
+                {
+                    Position pos = new Position(origin.Row, destiny.Column);
+                    capturedPiece = Board.RemovePiece(pos);
+                    _capturedPieces.Add(capturedPiece);
+                }
+            }
+
             return capturedPiece;
         }
 
@@ -136,6 +149,16 @@ namespace ChessGame.Controller
                 Piece temp = Board.RemovePiece(rookD);
                 temp.DecrementQtyMoves();
                 Board.AddPiece(temp, rookO);
+            }
+
+            // Special move: En Passant
+            if (piece is Pawn)
+            {
+                if (origin.Column != destiny.Column && capturedPiece == VulnerableEnPassant)
+                {
+                    Position pos = new Position(origin.Row, destiny.Column);
+                    Board.AddPiece(Board.RemovePiece(destiny), pos);
+                }
             }
 
         }
@@ -268,6 +291,18 @@ namespace ChessGame.Controller
                 GameTurn++;
                 ChangePlayer();
             }
+
+            // Special move: En Passant
+            Piece piece = Board.GetPiece(destiny);
+            if (piece is Pawn &&(destiny.Row == origin.Row + 2 || destiny.Row == origin.Row - 2))
+            {
+                VulnerableEnPassant = piece;
+            }
+            else
+            {
+                VulnerableEnPassant = null;
+            }
+
         }
 
         public bool[,] AvailableMovements(Position position)
